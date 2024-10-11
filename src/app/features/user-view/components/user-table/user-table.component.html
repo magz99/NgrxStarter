@@ -1,0 +1,31 @@
+<form [formGroup]="tableForm">
+    <table>
+        <thead>
+        <tr>
+        @for (item of tableHeaderKeys; track item) {
+            <th>{{tableHeaders[item]}}</th>
+        }
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="userTableRows">
+                @for (formGroupItem of userTableRows.controls; track formGroupItem; let idx = $index) {
+                    <tr [formGroupName]="idx">
+                        @for (item of tableHeaderKeys; track item) {
+                            <td><input type="text" [formControlName]="item"/></td>
+                        }
+                        <td>
+                            @if (formGroupItem.get('isEditing')?.value) {
+                                <button [attr.aria-label]="saveAriaLabel" type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>
+                            }@else {
+                                <button [attr.aria-label]="editAriaLabel" type="button" (click)="editRow(idx, !formGroupItem.get('isEditing')?.value)">{{editLabel}}</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                
+            </ng-container>
+        </tbody>
+      </table>
+</form>

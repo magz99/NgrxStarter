@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
-import {HomeModule} from "./home/home.module";
+import { UserViewModule} from "./features/user-view/user-view.module";
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {HomeModule} from "./home/home.module";
     ReactiveFormsModule,
     StoreModule.forRoot([]),
     EffectsModule.forRoot([]),
-    HomeModule
+    UserViewModule
   ],
   declarations: [
     AppComponent

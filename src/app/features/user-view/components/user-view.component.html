@@ -1,0 +1,4 @@
+<div>
+    <h2>Users</h2>
+    <app-user-table [tableForm]="userTableForm" [tableHeaders]="USER_TABLE_HEADERS" (toggleEdit)="editRowData($event)" (rowModified)="saveRowData($event)"></app-user-table>
+</div>
