@@ -18,10 +18,7 @@ export class UserTableComponent implements OnInit {
     @Input() tableHeaders!: Record<string,string>;
     @Output() rowModified: EventEmitter<number> = new EventEmitter<number>()
     @Output() toggleEdit: EventEmitter<{rowId: number; value: boolean}> = new EventEmitter<{rowId: number; value: boolean}>();
-    constructor() {
-       
-    }
-
+    
     ngOnInit(): void {
         this.tableHeaderKeys = Object.keys(this.tableHeaders)
     }
@@ -31,13 +28,11 @@ export class UserTableComponent implements OnInit {
         return this.tableForm.get('userTableRows') as FormArray
       }
     
-      saveRow(index: number): void {
-       // formGroup.get('isEditing')?.patchValue(false);
-       this.rowModified.emit(index);
-      }
-    
-      editRow(index: number, value: boolean): void {
-        this.toggleEdit.emit({rowId: index,value})
-        //formGroup.get('isEditing')?.patchValue(true);
-      }
+    saveRow(index: number): void {
+    this.rowModified.emit(index);
+    }
+
+    editRow(index: number, value: boolean): void {
+    this.toggleEdit.emit({rowId: index,value});
+    }
 }

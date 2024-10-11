@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserData } from "../models/user-table.model";
 import { USER_TABLE_HEADERS } from "../user.constants";
+import { UserTableFormService } from "../services/user-table-form.service";
 
 @Component({
   selector: 'app-user-view',
@@ -10,19 +11,11 @@ import { USER_TABLE_HEADERS } from "../user.constants";
 })
 export class UserViewComponent {
   readonly USER_TABLE_HEADERS = USER_TABLE_HEADERS;
-  readonly userTableForm: FormGroup = this.fb.group({ userTableRows: this.fb.array([this.initializeUserRow(), this.initializeUserRow()]) })
+  readonly userTableForm: FormGroup;
   
 
-  constructor(private readonly fb: FormBuilder){}
-
-  initializeUserRow(): FormGroup<UserData> {
-    return this.fb.group<UserData>({
-      id: this.fb.control<string>({value: '99', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      name: this.fb.control<string>({value: 'Magz Bautista-Lee', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      username:  this.fb.control<string>({value: 'magz99', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      email: this.fb.control<string>({value: 'mbautistalee@gmail.com', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      isEditing: this.fb.control<boolean>(false, {nonNullable: true, validators: [Validators.required]} ),
-    })
+  constructor(private readonly userTableFormService: UserTableFormService){
+    this.userTableForm = this.userTableFormService.getUserTableForm();
   }
 
   get userTableRows(): FormArray<FormGroup<UserData>> {
@@ -30,13 +23,11 @@ export class UserViewComponent {
   }
 
   saveRowData(rowId: number): void {
-    this.userTableRows.at(rowId).get('isEditing')?.patchValue(false);
-    this.userTableRows.at(rowId).disable();
+    this.userTableFormService.saveRowData(rowId)
   }
 
   editRowData(data: { rowId: number; value: boolean; }): void {
-    this.userTableRows.at(data.rowId).enable();
-   this.userTableRows.at(data.rowId).get('isEditing')?.patchValue(true);
+    this.userTableFormService.editRowData(data)
   }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
-import { UserService } from "./user.service";
+import { UserService } from "./user-data.service";
 
-describe('User Service', ()=>{
+describe('User Data Service', ()=>{
 
     function setup() {
 
