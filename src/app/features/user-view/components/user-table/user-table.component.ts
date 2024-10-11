@@ -4,8 +4,8 @@ import { UserData } from "../../models/user-table.model";
 
 @Component({
     selector: 'app-user-table',
-  templateUrl: './user-table.component.html',
-  styles: [``]
+    templateUrl: './user-table.component.html',
+    styleUrls: ['./user-table.component.scss']
 })
 export class UserTableComponent implements OnInit {
     tableHeaderKeys: string[] = [];

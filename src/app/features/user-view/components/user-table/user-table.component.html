@@ -5,6 +5,7 @@
         @for (item of tableHeaderKeys; track item) {
             <th>{{tableHeaders[item]}}</th>
         }
+        <th></th>
         </tr>
         </thead>
         <tbody>
@@ -17,9 +18,9 @@
                         <td><input type="text" formControlName="email"/></td>
                         <td>
                             @if (formGroupItem.get('isEditing')?.value) {
-                                <button type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>
+                                <button [attr.aria-label]="saveAriaLabel" type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>
                             }@else {
-                                <button type="button" (click)="editRow(idx, !formGroupItem.get('isEditing')?.value)">{{editLabel}}</button>
+                                <button [attr.aria-label]="editAriaLabel" type="button" (click)="editRow(idx, !formGroupItem.get('isEditing')?.value)">{{editLabel}}</button>
                             }
                         </td>
                     </tr>

@@ -1,0 +1,57 @@
+input {
+    box-sizing: border-box;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+
+input[disabled] {
+    background-color: transparent;
+    color: black;
+    border: none;
+    text-overflow: ellipsis;
+}
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #0a6de6;
+}
+th {
+    letter-spacing: 2px;
+    background-color: #0a6de6;
+    color: #ffffff;
+}
+
+td {
+    letter-spacing: 1px;
+}
+
+tbody td {
+    text-align: center;
+    padding: 4px;
+}
+
+tfoot th {
+    text-align: right;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f0f2f2;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+button {
+    border: none;
+    background-color: #0a6de6;
+    color: white;
+    border-radius: 5px;
+
+    &:hover {
+        cursor: pointer;
+        background-color:  #043c80;
+    }
+}
