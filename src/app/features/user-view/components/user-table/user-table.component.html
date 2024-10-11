@@ -12,10 +12,9 @@
             <ng-container formArrayName="userTableRows">
                 @for (formGroupItem of userTableRows.controls; track formGroupItem; let idx = $index) {
                     <tr [formGroupName]="idx">
-                        <td><input type="text" formControlName="id"/></td>
-                        <td><input type="text" formControlName="name"/></td>
-                        <td><input type="text" formControlName="username"/></td>
-                        <td><input type="text" formControlName="email"/></td>
+                        @for (item of tableHeaderKeys; track item) {
+                            <td><input type="text" [formControlName]="item"/></td>
+                        }
                         <td>
                             @if (formGroupItem.get('isEditing')?.value) {
                                 <button [attr.aria-label]="saveAriaLabel" type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>

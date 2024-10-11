@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from "@angular/forms";
 import { UserData } from "../models/user-table.model";
+import { USER_TABLE_HEADERS } from "../user.constants";
 
 /**
  * Separate out the table creation logic into this service.
@@ -22,14 +23,26 @@ export class UserTableFormService {
     return this.userTableForm;
   }
 
+
+  /**
+   * Uses the keys that make up the table header in order to create the equivalent form 
+   * controls for the data.
+   */
   initializeUserRow(): FormGroup<UserData> {
-    return this.fb.group<UserData>({
-      id: this.fb.control<string>({value: '99', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      name: this.fb.control<string>({value: 'Magz Bautista-Lee', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      username:  this.fb.control<string>({value: 'magz99', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      email: this.fb.control<string>({value: 'mbautistalee@gmail.com', disabled: true}, {nonNullable: true, validators: [Validators.required]} ),
-      isEditing: this.fb.control<boolean>(false, {nonNullable: true, validators: [Validators.required]} ),
-    })
+
+    const dynamicGroup = Object.keys(USER_TABLE_HEADERS).reduce((prev, headerKey) => {
+      return {
+        ...prev,
+        [headerKey] : this.fb.control<string>({value: 'Test value', disabled: true}, {nonNullable: true, validators: [Validators.required]} )
+        }
+    }, {} as UserData);
+
+    const userDataGroup: UserData = {
+        ...dynamicGroup,
+        isEditing: this.fb.control<boolean>(false, {nonNullable: true, validators: [Validators.required]} ),
+    };
+
+    return this.fb.group<UserData>(userDataGroup);
   }
 
   getUserTableRows(): FormArray<FormGroup<UserData>> {
@@ -38,6 +51,7 @@ export class UserTableFormService {
 
 
   saveRowData(rowId: number): void {
+    console.log('magz row data: ',  this.getUserTableRows().at(rowId).value);
     this.getUserTableRows().at(rowId).get('isEditing')?.patchValue(false);
     this.getUserTableRows().at(rowId).disable();
   }
