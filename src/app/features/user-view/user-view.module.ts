@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HomeComponent} from "./home.component";
+import {UserViewComponent} from "./components/user-view.component";
 import {CommonModule} from "@angular/common";
 
 @NgModule({
@@ -11,11 +11,11 @@ import {CommonModule} from "@angular/common";
         CommonModule
     ],
     declarations: [
-        HomeComponent
+        UserViewComponent
     ],
     exports: [
-        HomeComponent
+        UserViewComponent
     ]
 })
-export class HomeModule {
+export class UserViewModule {
 }
