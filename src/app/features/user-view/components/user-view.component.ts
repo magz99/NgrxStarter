@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserData } from "../models/user-table.model";
+import { UserRowData } from "../models/user-table.model";
 import { USER_TABLE_HEADERS } from "../user.constants";
 import { UserTableFormService } from "../services/user-table-form.service";
 
@@ -18,7 +18,7 @@ export class UserViewComponent {
     this.userTableForm = this.userTableFormService.getUserTableForm();
   }
 
-  get userTableRows(): FormArray<FormGroup<UserData>> {
+  get userTableRows(): FormArray<FormGroup<UserRowData>> {
     return this.userTableForm.get('userTableRows') as FormArray
   }
 

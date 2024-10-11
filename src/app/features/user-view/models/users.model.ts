@@ -13,7 +13,7 @@ export interface UserCompany {
     catchPhrase: string;
     bs: string;
 }
-export interface UsersResponse {
+export interface UserData {
     id: number;
     name: string;
     username: string;
@@ -23,3 +23,10 @@ export interface UsersResponse {
     website: string;
     company: UserCompany;
 }
+
+export type UsersResponse = UserData[];
+
+
+export type UserUiData = Pick<UserData, 'id' | 'name'| 'username' |'email'> & {
+    isEditing: boolean;
+};

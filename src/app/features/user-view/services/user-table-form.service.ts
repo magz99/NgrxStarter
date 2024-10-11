@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from "@angular/forms";
-import { UserData } from "../models/user-table.model";
+import { UserRowData } from "../models/user-table.model";
 import { USER_TABLE_HEADERS } from "../user.constants";
 
 /**
@@ -28,24 +28,24 @@ export class UserTableFormService {
    * Uses the keys that make up the table header in order to create the equivalent form 
    * controls for the data.
    */
-  initializeUserRow(): FormGroup<UserData> {
+  initializeUserRow(): FormGroup<UserRowData> {
 
     const dynamicGroup = Object.keys(USER_TABLE_HEADERS).reduce((prev, headerKey) => {
       return {
         ...prev,
         [headerKey] : this.fb.control<string>({value: 'Test value', disabled: true}, {nonNullable: true, validators: [Validators.required]} )
         }
-    }, {} as UserData);
+    }, {} as UserRowData);
 
-    const userDataGroup: UserData = {
+    const userDataGroup: UserRowData = {
         ...dynamicGroup,
         isEditing: this.fb.control<boolean>(false, {nonNullable: true, validators: [Validators.required]} ),
     };
 
-    return this.fb.group<UserData>(userDataGroup);
+    return this.fb.group<UserRowData>(userDataGroup);
   }
 
-  getUserTableRows(): FormArray<FormGroup<UserData>> {
+  getUserTableRows(): FormArray<FormGroup<UserRowData>> {
     return this.userTableForm.get('userTableRows') as FormArray
   }
 
@@ -54,10 +54,12 @@ export class UserTableFormService {
     console.log('magz row data: ',  this.getUserTableRows().at(rowId).value);
     this.getUserTableRows().at(rowId).get('isEditing')?.patchValue(false);
     this.getUserTableRows().at(rowId).disable();
+
+    // Dispatch action to so that the API service can be called.
   }
 
   editRowData(data: { rowId: number; value: boolean; }): void {
     this.getUserTableRows().at(data.rowId).enable();
-   this.getUserTableRows().at(data.rowId).get('isEditing')?.patchValue(true);
+    this.getUserTableRows().at(data.rowId).get('isEditing')?.patchValue(true);
   }
 }

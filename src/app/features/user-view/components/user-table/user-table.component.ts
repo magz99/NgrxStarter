@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
-import { UserData } from "../../models/user-table.model";
+import { UserRowData } from "../../models/user-table.model";
 
 @Component({
     selector: 'app-user-table',
@@ -24,7 +24,7 @@ export class UserTableComponent implements OnInit {
     }
 
 
-    get userTableRows(): FormArray<FormGroup<UserData>> {
+    get userTableRows(): FormArray<FormGroup<UserRowData>> {
         return this.tableForm.get('userTableRows') as FormArray
       }
     

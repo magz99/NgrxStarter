@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { UsersResponse } from "../models/users.model";
+import { UserData, UsersResponse } from "../models/users.model";
 import { Observable } from "rxjs";
 import { USERS_BASE_URL } from "../user.constants";
 
