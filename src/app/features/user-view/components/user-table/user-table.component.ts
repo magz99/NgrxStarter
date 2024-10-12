@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { UserRowData } from "../../models/user-table.model";
 
 @Component({
     selector: 'app-user-table',
     templateUrl: './user-table.component.html',
-    styleUrls: ['./user-table.component.scss']
+    styleUrls: ['./user-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserTableComponent implements OnInit {
     tableHeaderKeys: string[] = [];
@@ -14,7 +15,7 @@ export class UserTableComponent implements OnInit {
     readonly saveLabel = 'Save';
     readonly saveAriaLabel = 'Save row changes';
 
-    @Input() tableForm!: FormGroup;
+    @Input() tableForm?: FormGroup;
     @Input() tableHeaders!: Record<string,string>;
     @Output() rowModified: EventEmitter<number> = new EventEmitter<number>()
     @Output() toggleEdit: EventEmitter<{rowId: number; value: boolean}> = new EventEmitter<{rowId: number; value: boolean}>();
@@ -25,7 +26,7 @@ export class UserTableComponent implements OnInit {
 
 
     get userTableRows(): FormArray<FormGroup<UserRowData>> {
-        return this.tableForm.get('userTableRows') as FormArray
+        return this.tableForm?.get('userTableRows') as FormArray
       }
     
     saveRow(index: number): void {

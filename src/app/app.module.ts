@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import { UserViewModule} from "./features/user-view/user-view.module";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   imports: [
@@ -12,13 +13,14 @@ import { UserViewModule} from "./features/user-view/user-view.module";
     ReactiveFormsModule,
     StoreModule.forRoot([]),
     EffectsModule.forRoot([]),
-    UserViewModule
+    UserViewModule,
+    StoreDevtoolsModule.instrument() // TODO: remove this later
   ],
   declarations: [
     AppComponent
   ],
   bootstrap: [
     AppComponent
-  ]
+  ],
 })
 export class AppModule { }

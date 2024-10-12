@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { UserService } from "./user-data.service";
+import { UserDataService } from "./user-data.service";
 
 describe('User Data Service', ()=>{
 
@@ -7,7 +7,7 @@ describe('User Data Service', ()=>{
 
         const mockHttpClient : jasmine.SpyObj<HttpClient> = jasmine.createSpyObj('HttpClient', ['get']);
 
-        const service = new UserService(mockHttpClient);
+        const service = new UserDataService(mockHttpClient);
         return {
             service,
             mockHttpClient
