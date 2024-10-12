@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { UserUiData, UsersResponse } from "../models/users.model";
-import { userDataApiActions, userDataServiceActions } from "./users-view.actions";
+import { UserFormData, UsersResponse } from "../models/users.model";
+import { userDataApiActions } from "./users-view.actions";
 
 export const USER_VIEW_FEATURE_KEY = 'userView';
 
@@ -21,6 +21,16 @@ export const usersViewReducer = createReducer(initialState,
         return {
             ...state,
             response: data,
+        }
+    }),
+    on(userDataApiActions.userUpdatedSuccess, (state, {data})=>{
+        const updatedUsers = state.response.map(
+            user=>data.id === user.id ? data : user
+        );
+        
+        return {
+            ...state,
+            response: updatedUsers,
         }
     }),
 )

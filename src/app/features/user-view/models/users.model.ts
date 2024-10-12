@@ -26,7 +26,9 @@ export interface UserData {
 
 export type UsersResponse = UserData[];
 
+export type UserUiData = Pick<UserData, 'id' | 'name'| 'username' |'email'>;
 
-export type UserUiData = Pick<UserData, 'id' | 'name'| 'username' |'email'> & {
+export type UserFormData = Omit<UserUiData, 'id'> & {
+    id: string;
     isEditing: boolean;
 };
