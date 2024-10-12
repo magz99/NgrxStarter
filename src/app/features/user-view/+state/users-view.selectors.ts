@@ -13,3 +13,4 @@ export const selectUserUiData = createSelector(selectUserResponse, (userResponse
     return mapUserResponseToUserUiData(userResponse)
 });
 
+export const selectErrorMessage = createSelector(selectUserViewState, (state: UserState)=>state.errorMsg)

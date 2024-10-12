@@ -18,18 +18,16 @@
                             }@else if (item === 'isEditing') {
                                 <td>
                                     @if (formGroupItem.get('isEditing')?.value) {
-                                        <button [attr.aria-label]="saveAriaLabel" type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>
+                                        <button [attr.aria-label]="saveAriaLabel + idx" type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>
                                     }@else {
-                                        <button [attr.aria-label]="editAriaLabel" type="button" (click)="editRow(idx)">{{editLabel}}</button>
+                                        <button [attr.aria-label]="editAriaLabel + idx" type="button" (click)="editRow(idx)">{{editLabel}}</button>
                                     }
                                 </td>
                             } @else if(item ==='email') {
-                                <td><input type="email" [formControlName]="item"/></td>
+                                <td><label for="email-{{idx}}" class="visually-hidden">Email</label><input name="email-{{idx}}" type="email" [formControlName]="item"/></td>
                             } @else {
-                                    <td><input type="text" [formControlName]="item"/></td>
+                                <td><label for="{{item}}-{{idx}}" class="visually-hidden">{{tableHeaders[item]}}</label><input name="{{item}}-{{idx}}" type="text" [formControlName]="item"/></td>
                                 }
-                            
-                            
                         }
                         
                     </tr>

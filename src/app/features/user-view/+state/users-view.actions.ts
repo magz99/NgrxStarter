@@ -1,20 +1,13 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { UserData, UserFormData, UserUiData, UsersResponse } from "../models/users.model";
+import { UserData, UserUiData, UsersResponse } from "../models/users.model";
 
-// export const userDataServiceActions = createActionGroup({
-//     source: 'User Data Service',
-//     events: {
-//         // The effect will dispatch this
-//         'Update User Data': props<{data: UserUiData}>()
-//     }
-// })
-
+/**
+ * The Effect will dispatch these actions.
+ */
 export const userDataApiActions = createActionGroup({
     source: 'User Data Service',
     events: {
-        // The effect will dispatch this
         'Users Loaded Success': props<{data: UsersResponse}>(),
-        // The effect will dispatch this
         'Users Loaded Failure': props<{errorMsg: string}>(),
 
         'User Updated Success': props<{data: UserData}>(),
@@ -22,6 +15,9 @@ export const userDataApiActions = createActionGroup({
     }
 })
 
+/**
+ * The User View component will dispatch these actions.
+ */
 export const usersViewComponentActions = createActionGroup({
     source: 'User View Component',
     events: {

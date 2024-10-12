@@ -5,7 +5,6 @@ export interface UserRowData {
     name: FormControl<string>;
     username:  FormControl<string>;
     email: FormControl<string>;
-
-    // TODO: rename to isEditMode
+    
     isEditing: FormControl<boolean>;
 }

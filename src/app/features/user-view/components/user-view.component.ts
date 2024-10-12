@@ -3,10 +3,10 @@ import { FormArray, FormGroup } from "@angular/forms";
 import { UserRowData } from "../models/user-table.model";
 import { USER_TABLE_HEADERS } from "../user-view.constants";
 import { UserTableFormService } from "../services/user-table-form.service";
-import { Observable, map } from "rxjs";
+import { Observable, combineLatest, map } from "rxjs";
 import { Store } from "@ngrx/store";
 import { usersViewComponentActions } from "../+state/users-view.actions";
-import { selectUserUiData } from "../+state/users-view.selectors";
+import { selectErrorMessage, selectUserUiData } from "../+state/users-view.selectors";
 import { UserFormData } from "../models/users.model";
 import { mapUserFormDataToUserUiData } from "../+state/data-transformers";
 import { getUserTableRows } from "../user-view.helpers";
@@ -25,6 +25,13 @@ export class UserViewComponent implements OnInit {
 }>> = this.users$.pipe(
     map(users=>this.userTableFormService.createUserTableForm(users))
   );
+
+  readonly errorMessage$: Observable<string | undefined> = this.store.select(selectErrorMessage);
+
+  readonly vm$ = combineLatest({
+    userTableForm: this.userTableForm$,
+    errorMessage: this.errorMessage$
+  }).pipe(map(({userTableForm, errorMessage})=>({userTableForm, errorMessage})))
 
   constructor(private readonly userTableFormService: UserTableFormService, private readonly store: Store){
 

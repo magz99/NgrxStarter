@@ -13,14 +13,16 @@ export class UserTableFormService {
   constructor(private readonly fb: FormBuilder){
   }
 
+  /**
+   * Dynamically create the formGroup based on loaded User data.
+   */
   createUserTableForm(users: UserFormData[]): FormGroup<{userTableRows: FormArray<FormGroup<UserRowData>>}> {
-     return  this.fb.group<{userTableRows: FormArray<FormGroup<UserRowData>>}>({ userTableRows: this.fb.array(users.map(user=>this.initializeUserRow(user))) })
-    
+     return this.fb.group<{userTableRows: FormArray<FormGroup<UserRowData>>}>({ userTableRows: this.fb.array(users.map(user=>this.initializeUserRow(user))) })
   }
 
   /**
    * Uses the keys that make up the table header in order to create the equivalent form 
-   * controls for the data.
+   * controls for the data. Initializes the controls as disabled (read-only).
    */
   initializeUserRow(userData: UserFormData): FormGroup<UserRowData> {
 

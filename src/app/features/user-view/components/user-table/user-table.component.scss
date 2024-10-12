@@ -3,6 +3,7 @@ input {
     padding: 0;
     text-align: center;
     width: 100%;
+    font-size: 13px;
 }
 
 input[disabled] {
@@ -19,6 +20,18 @@ input.ng-invalid {
     border-radius: 2px;
 }
 
+label.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    display: inline-block;
+}
+
 table {
     table-layout: fixed;
     width: 100%;
@@ -33,6 +46,7 @@ th {
 
 td {
     letter-spacing: 1px;
+    font-size: 13px;
 }
 
 tbody td {

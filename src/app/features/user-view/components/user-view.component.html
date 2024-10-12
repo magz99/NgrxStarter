@@ -1,10 +1,12 @@
 <div>
     <h2>Users</h2>
-    @if(userTableForm$ | async; as userTableForm) {
-        <app-user-table [tableForm]="userTableForm" [tableHeaders]="USER_TABLE_HEADERS" (toggleEdit)="editRowData($event, userTableForm)" (rowModified)="saveRowData($event, userTableForm)"></app-user-table>
-    }@else if(false) {
-
-    } @else {
+    @if(vm$ | async; as vm) {
+        @if(vm.errorMessage) {
+            <p>User data could not be loaded at this time. Try again later.</p>
+        }@else {
+            <app-user-table [tableForm]="vm.userTableForm" [tableHeaders]="USER_TABLE_HEADERS" (toggleEdit)="editRowData($event, vm.userTableForm)" (rowModified)="saveRowData($event, vm.userTableForm)"></app-user-table>
+        }
+    }@else {
         <p>Loading user data...</p>
     }
 </div>

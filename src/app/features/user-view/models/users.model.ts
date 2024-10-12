@@ -1,3 +1,6 @@
+/**
+ * Interfaces representing the response model
+ */
 export interface UserAddress {
     street: string;
     suite: string;
@@ -26,6 +29,9 @@ export interface UserData {
 
 export type UsersResponse = UserData[];
 
+/**
+ * Interfaces, Types representing the UI models
+ */
 export type UserUiData = Pick<UserData, 'id' | 'name'| 'username' |'email'>;
 
 export type UserFormData = Omit<UserUiData, 'id'> & {

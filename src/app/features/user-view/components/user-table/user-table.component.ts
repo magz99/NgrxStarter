@@ -12,9 +12,9 @@ export class UserTableComponent implements OnInit {
     tableHeaderKeys: string[] = [];
     readonly getUserTableRows = getUserTableRows;
     readonly editLabel = 'Edit';
-    readonly editAriaLabel = 'Edit the row';
+    readonly editAriaLabel = 'Edit row: ';
     readonly saveLabel = 'Save';
-    readonly saveAriaLabel = 'Save row changes ';
+    readonly saveAriaLabel = 'Save row changes for row:';
 
     @Input() tableForm?: FormGroup;
     @Input() tableHeaders!: Record<string,string>;

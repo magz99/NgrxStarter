@@ -24,7 +24,7 @@ import { HttpClientModule } from "@angular/common/http";
         UserViewComponent, UserTableComponent
     ],
     exports: [
-        UserViewComponent, UserTableComponent
+        UserViewComponent
     ],
     providers: [UserTableFormService]
 })
