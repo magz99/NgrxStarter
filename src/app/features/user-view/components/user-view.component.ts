@@ -34,7 +34,6 @@ export class UserViewComponent implements OnInit {
   }).pipe(map(({userTableForm, errorMessage})=>({userTableForm, errorMessage})))
 
   constructor(private readonly userTableFormService: UserTableFormService, private readonly store: Store){
-
   }
 
   ngOnInit(): void {
@@ -43,12 +42,11 @@ export class UserViewComponent implements OnInit {
  
   saveRowData(rowId: number, tableForm: FormGroup): void {
     const tableRowGroup = getUserTableRows(tableForm).at(rowId);
-
+    
     if(tableRowGroup.valid) {
       tableRowGroup.get('isEditing')?.patchValue(false);
       tableRowGroup.disable();
    
-
       if(tableRowGroup.dirty) {
         // Dispatch action to so that the API service can be called.
         this.store.dispatch(usersViewComponentActions.saveUserData({

@@ -25,11 +25,13 @@ export class UserTableFormService {
    * controls for the data. Initializes the controls as disabled (read-only).
    */
   initializeUserRow(userData: UserFormData): FormGroup<UserRowData> {
+    const defaultValidators = [Validators.required];
+    const emailValidators = [...defaultValidators,Validators.email];
 
     const dynamicGroup = Object.keys(USER_TABLE_HEADERS).reduce((prev, headerKey) => {
       return {
         ...prev,
-        [headerKey] : this.fb.control<string | boolean>({value: userData[headerKey as keyof UserFormData], disabled: true}, {nonNullable: true, validators: [Validators.required]} )
+        [headerKey] : this.fb.control<string | boolean>({value: userData[headerKey as keyof UserFormData], disabled: true}, {nonNullable: true, validators: headerKey === 'email' ? emailValidators : defaultValidators} )
         }
     }, {} as UserRowData);
 
