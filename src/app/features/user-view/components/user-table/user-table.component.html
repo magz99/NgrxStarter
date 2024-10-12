@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             <ng-container formArrayName="userTableRows">
-                @for (formGroupItem of userTableRows.controls; track formGroupItem; let idx = $index) {
+                @for (formGroupItem of getUserTableRows(tableForm).controls; track formGroupItem; let idx = $index) {
                     <tr [formGroupName]="idx">
                         @for (item of tableHeaderKeys; track item) {
                             @if (item === 'isEditing') {

@@ -1,8 +1,10 @@
 <div>
     <h2>Users</h2>
-    @if (userTableForm) {
-        <app-user-table [tableForm]="userTableForm" [tableHeaders]="USER_TABLE_HEADERS" (toggleEdit)="editRowData($event)" (rowModified)="saveRowData($event)"></app-user-table>
+    @if(userTableForm$ | async; as userTableForm) {
+        <app-user-table [tableForm]="userTableForm" [tableHeaders]="USER_TABLE_HEADERS" (toggleEdit)="editRowData($event, userTableForm)" (rowModified)="saveRowData($event, userTableForm)"></app-user-table>
+    }@else if(false) {
+
     } @else {
-        <p>The user data is loading...</p>
+        <p>Loading user data...</p>
     }
 </div>

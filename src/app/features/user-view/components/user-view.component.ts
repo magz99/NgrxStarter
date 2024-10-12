@@ -1,67 +1,58 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { UserRowData } from "../models/user-table.model";
-import { USER_TABLE_HEADERS } from "../user.constants";
+import { USER_TABLE_HEADERS } from "../user-view.constants";
 import { UserTableFormService } from "../services/user-table-form.service";
-import { Observable, Subscription, tap } from "rxjs";
+import { Observable, Subscription, combineLatest, map, tap } from "rxjs";
 import { Store } from "@ngrx/store";
 import { usersViewComponentActions } from "../+state/users-view.actions";
 import { selectUserUiData } from "../+state/users-view.selectors";
 import { UserFormData } from "../models/users.model";
 import { mapUserFormDataToUserUiData } from "../+state/data-transformers";
+import { getUserTableRows } from "../user-view.helpers";
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserViewComponent implements OnInit, OnDestroy {
-  userTableForm: FormGroup | undefined;
-
-  private subscription?: Subscription;
+export class UserViewComponent implements OnInit {
   readonly USER_TABLE_HEADERS = USER_TABLE_HEADERS;
   readonly users$: Observable<UserFormData[]> = this.store.select(selectUserUiData);
+
+  readonly userTableForm$: Observable<FormGroup<{
+    userTableRows: FormArray<FormGroup<UserRowData>>;
+}>> = this.users$.pipe(
+    map(users=>this.userTableFormService.createUserTableForm(users))
+  );
 
   constructor( private readonly userTableFormService: UserTableFormService, private readonly store: Store){
 
   }
 
-  getUserTableRows(): FormArray<FormGroup<UserRowData>> {
-    return this.userTableForm?.get('userTableRows') as FormArray
+  ngOnInit(): void {
+    this.store.dispatch(usersViewComponentActions.loadUserData());
   }
  
-  saveRowData(rowId: number): void {
-    const tableRowGroup = this.getUserTableRows().at(rowId);
+  saveRowData(rowId: number, tableForm: FormGroup): void {
+    const tableRowGroup = getUserTableRows(tableForm).at(rowId);
 
     tableRowGroup.get('isEditing')?.patchValue(false);
     tableRowGroup.disable();
 
-    // TODO: only dispatch if the values have changed.
+    // TODO: only dispatch if the values have changed and are valid.
     // Dispatch action to so that the API service can be called.
     this.store.dispatch(usersViewComponentActions.saveUserData({
       data: mapUserFormDataToUserUiData(tableRowGroup.getRawValue())
     }))
   }
 
-  editRowData(rowId: number): void {
-    const tableRowGroup = this.getUserTableRows().at(rowId);
+  editRowData(rowId: number, tableForm: FormGroup): void {
+    const tableRowGroup = getUserTableRows(tableForm).at(rowId);
 
     tableRowGroup.enable();
     tableRowGroup.get('isEditing')?.patchValue(true);
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(usersViewComponentActions.loadUserData());
-
-    // Listen for Users data to be loaded and update the table formgroup
-    this.subscription = this.users$.pipe(
-      tap(users=>{
-        this.userTableForm = this.userTableFormService.createUserTableForm(users);
-      })
-    ).subscribe()
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
-
+  
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { UserRowData } from "../models/user-table.model";
-import { USER_TABLE_HEADERS } from "../user.constants";
+import { USER_TABLE_HEADERS } from "../user-view.constants";
 import { UserFormData } from "../models/users.model";
 
 /**

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { UserRowData } from "../../models/user-table.model";
+import { getUserTableRows } from "../../user-view.helpers";
 
 @Component({
     selector: 'app-user-table',
@@ -10,10 +11,11 @@ import { UserRowData } from "../../models/user-table.model";
 })
 export class UserTableComponent implements OnInit {
     tableHeaderKeys: string[] = [];
+    readonly getUserTableRows = getUserTableRows;
     readonly editLabel = 'Edit';
     readonly editAriaLabel = 'Edit the row';
     readonly saveLabel = 'Save';
-    readonly saveAriaLabel = 'Save row changes';
+    readonly saveAriaLabel = 'Save row changes ';
 
     @Input() tableForm?: FormGroup;
     @Input() tableHeaders!: Record<string,string>;
@@ -23,11 +25,6 @@ export class UserTableComponent implements OnInit {
     ngOnInit(): void {
         this.tableHeaderKeys = Object.keys(this.tableHeaders)
     }
-
-
-    get userTableRows(): FormArray<FormGroup<UserRowData>> {
-        return this.tableForm?.get('userTableRows') as FormArray
-      }
     
     saveRow(index: number): void {
     this.rowModified.emit(index);
