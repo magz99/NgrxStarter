@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import { FormArray, FormGroup } from "@angular/forms";
 import { UserRowData } from "../models/user-table.model";
 import { USER_TABLE_HEADERS } from "../user-view.constants";
 import { UserTableFormService } from "../services/user-table-form.service";
-import { Observable, Subscription, combineLatest, map, tap } from "rxjs";
+import { Observable, map } from "rxjs";
 import { Store } from "@ngrx/store";
 import { usersViewComponentActions } from "../+state/users-view.actions";
 import { selectUserUiData } from "../+state/users-view.selectors";
@@ -26,7 +26,7 @@ export class UserViewComponent implements OnInit {
     map(users=>this.userTableFormService.createUserTableForm(users))
   );
 
-  constructor( private readonly userTableFormService: UserTableFormService, private readonly store: Store){
+  constructor(private readonly userTableFormService: UserTableFormService, private readonly store: Store){
 
   }
 
@@ -37,14 +37,18 @@ export class UserViewComponent implements OnInit {
   saveRowData(rowId: number, tableForm: FormGroup): void {
     const tableRowGroup = getUserTableRows(tableForm).at(rowId);
 
-    tableRowGroup.get('isEditing')?.patchValue(false);
-    tableRowGroup.disable();
+    if(tableRowGroup.valid) {
+      tableRowGroup.get('isEditing')?.patchValue(false);
+      tableRowGroup.disable();
+   
 
-    // TODO: only dispatch if the values have changed and are valid.
-    // Dispatch action to so that the API service can be called.
-    this.store.dispatch(usersViewComponentActions.saveUserData({
-      data: mapUserFormDataToUserUiData(tableRowGroup.getRawValue())
-    }))
+      if(tableRowGroup.dirty) {
+        // Dispatch action to so that the API service can be called.
+        this.store.dispatch(usersViewComponentActions.saveUserData({
+          data: mapUserFormDataToUserUiData(tableRowGroup.getRawValue())
+        }))
+      }
+    }
   }
 
   editRowData(rowId: number, tableForm: FormGroup): void {

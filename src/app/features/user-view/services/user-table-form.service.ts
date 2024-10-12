@@ -5,7 +5,7 @@ import { USER_TABLE_HEADERS } from "../user-view.constants";
 import { UserFormData } from "../models/users.model";
 
 /**
- * Separate out the table creation logic into this service.
+ * Separate out the table creation logic into this helper service.
  */
 @Injectable({providedIn: 'root'})
 export class UserTableFormService {
@@ -27,7 +27,7 @@ export class UserTableFormService {
     const dynamicGroup = Object.keys(USER_TABLE_HEADERS).reduce((prev, headerKey) => {
       return {
         ...prev,
-        [headerKey] : this.fb.control({value: userData[headerKey as keyof UserFormData], disabled: true}, {nonNullable: true, validators: [Validators.required]} )
+        [headerKey] : this.fb.control<string | boolean>({value: userData[headerKey as keyof UserFormData], disabled: true}, {nonNullable: true, validators: [Validators.required]} )
         }
     }, {} as UserRowData);
 

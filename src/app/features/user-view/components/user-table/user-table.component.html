@@ -13,7 +13,9 @@
                 @for (formGroupItem of getUserTableRows(tableForm).controls; track formGroupItem; let idx = $index) {
                     <tr [formGroupName]="idx">
                         @for (item of tableHeaderKeys; track item) {
-                            @if (item === 'isEditing') {
+                            @if(item ==='id') {
+                                <td>{{formGroupItem.get('id')?.value}}</td>
+                            }@else if (item === 'isEditing') {
                                 <td>
                                     @if (formGroupItem.get('isEditing')?.value) {
                                         <button [attr.aria-label]="saveAriaLabel" type="button" (click)="saveRow(idx)">{{ saveLabel }}</button>
@@ -21,9 +23,12 @@
                                         <button [attr.aria-label]="editAriaLabel" type="button" (click)="editRow(idx)">{{editLabel}}</button>
                                     }
                                 </td>
-                            }@else {
-                                <td><input type="text" [formControlName]="item"/></td>
-                            }
+                            } @else if(item ==='email') {
+                                <td><input type="email" [formControlName]="item"/></td>
+                            } @else {
+                                    <td><input type="text" [formControlName]="item"/></td>
+                                }
+                            
                             
                         }
                         

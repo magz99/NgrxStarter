@@ -1,19 +1,20 @@
 import { createReducer, on } from "@ngrx/store";
-import { UserFormData, UsersResponse } from "../models/users.model";
+import { UsersResponse } from "../models/users.model";
 import { userDataApiActions } from "./users-view.actions";
 
 export const USER_VIEW_FEATURE_KEY = 'userView';
 
 export interface UserState {
     response: UsersResponse;
-    //userUiData: UserUiData[];
 }
 
-// TODO: If we anticipate that our User list will grow, we can leverage NgRx Entity State
-
+/**
+ * Note: If we anticipate that our User list will grow, or that we will 
+ * be doing more complicated manipulation of data, we can leverage NgRx 
+ * Entity State.
+ */
 export const initialState: UserState = {
    response: [],
-   //userUiData: []
 };
 
 export const usersViewReducer = createReducer(initialState,

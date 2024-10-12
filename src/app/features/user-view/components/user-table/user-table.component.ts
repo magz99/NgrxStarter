@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
-import { UserRowData } from "../../models/user-table.model";
+import { FormGroup } from "@angular/forms";
 import { getUserTableRows } from "../../user-view.helpers";
 
 @Component({
