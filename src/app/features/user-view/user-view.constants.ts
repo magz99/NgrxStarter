@@ -1,4 +1,4 @@
-import { UsersResponse } from "./models/users.model"
+import { User } from "./models/users.model"
 
 export const USERS_BASE_URL = 'https://jsonplaceholder.typicode.com/users'
 
@@ -13,7 +13,7 @@ export const USER_TABLE_HEADERS: Record<string, string> = {
   }
 
 
-export const  MOCK_RESPONSE: UsersResponse = [
+export const  MOCK_RESPONSE: User[] = [
     {
       "id": 1,
       "name": "Leanne Graham",

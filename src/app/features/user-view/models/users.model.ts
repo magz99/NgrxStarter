@@ -16,7 +16,7 @@ export interface UserCompany {
     catchPhrase: string;
     bs: string;
 }
-export interface UserData {
+export interface User {
     id: number;
     name: string;
     username: string;
@@ -27,12 +27,10 @@ export interface UserData {
     company: UserCompany;
 }
 
-export type UsersResponse = UserData[];
-
 /**
  * Interfaces, Types representing the UI models
  */
-export type UserUiData = Pick<UserData, 'id' | 'name'| 'username' |'email'>;
+export type UserUiData = Pick<User, 'id' | 'name'| 'username' |'email'>;
 
 export type UserFormData = Omit<UserUiData, 'id'> & {
     id: string;

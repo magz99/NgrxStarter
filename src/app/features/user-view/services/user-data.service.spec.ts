@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { UserDataService } from "./user-data.service";
 import { MOCK_RESPONSE, USERS_BASE_URL } from "../user-view.constants";
 import { of } from "rxjs";
-import { UserData, UserUiData } from "../models/users.model";
+import { User, UserUiData } from "../models/users.model";
 
 describe('User Data Service', ()=>{
 

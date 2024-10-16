@@ -6,10 +6,10 @@ import { UserTableFormService } from "../services/user-table-form.service";
 import { Observable, combineLatest, map } from "rxjs";
 import { Store } from "@ngrx/store";
 import { usersViewComponentActions } from "../+state/users-view.actions";
-import { selectErrorMessage, selectUserUiData } from "../+state/users-view.selectors";
-import { UserFormData } from "../models/users.model";
+import {selectUserUiData } from "../+state/users-view.selectors";
 import { mapUserFormDataToUserUiData } from "../+state/data-transformers";
 import { getUserTableRows } from "../user-view.helpers";
+import { usersFeature } from "../+state/users-view.reducer";
 
 @Component({
   selector: 'app-user-view',
@@ -18,7 +18,7 @@ import { getUserTableRows } from "../user-view.helpers";
 })
 export class UserViewComponent implements OnInit {
   readonly USER_TABLE_HEADERS = USER_TABLE_HEADERS;
-  readonly users$: Observable<UserFormData[]> = this.store.select(selectUserUiData);
+  readonly users$ = this.store.select(selectUserUiData);
 
   readonly userTableForm$: Observable<FormGroup<{
     userTableRows: FormArray<FormGroup<UserRowData>>;
@@ -26,7 +26,7 @@ export class UserViewComponent implements OnInit {
     map(users=>this.userTableFormService.createUserTableForm(users))
   );
 
-  readonly errorMessage$: Observable<string | undefined> = this.store.select(selectErrorMessage);
+  readonly errorMessage$: Observable<string | undefined> = this.store.select(usersFeature.selectErrorMsg);//this.store.select(selectErrorMessage);
 
   readonly vm$ = combineLatest({
     userTableForm: this.userTableForm$,

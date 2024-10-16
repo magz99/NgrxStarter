@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { UserDataService } from "../services/user-data.service";
 import { userDataApiActions, usersViewComponentActions } from "./users-view.actions";
 import { catchError, exhaustMap, map, of } from "rxjs";
-import { UserData } from "../models/users.model";
+import { User } from "../models/users.model";
 
 export const loadUsers = createEffect(
     (actions$ = inject(Actions), userDataService = inject(UserDataService)) => {
@@ -29,7 +29,7 @@ export const updateUser = createEffect(
         ofType(usersViewComponentActions.saveUserData),
         exhaustMap(({data}) =>
         userDataService.updateUser(data).pipe(
-            map((user: UserData) => userDataApiActions.userUpdatedSuccess({ data: user })),
+            map((user: User) => userDataApiActions.userUpdatedSuccess({ data: user })),
             catchError((error: { message: string }) =>
               of(userDataApiActions.userUpdatedFailure({ errorMsg: error.message }))
             )
