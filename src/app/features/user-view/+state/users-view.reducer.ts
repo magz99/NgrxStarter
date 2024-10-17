@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from "@ngrx/store";
-import { User, UsersResponse } from "../models/users.model";
+import { User } from "../models/users.model";
 import { userDataApiActions, usersViewComponentActions } from "./users-view.actions";
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 
@@ -19,16 +19,6 @@ export const initialState: State = adapter.getInitialState({
 });
 
 
-/**
- * Note: If we anticipate that our User list will grow, or that we will 
- * be doing more complicated manipulation of data, we can leverage NgRx 
- * Entity State.
- */
-// export const initialState: UserState = {
-//    response: [],
-//    loading: false,
-//    errorMsg: undefined
-// };
 
 export const usersViewReducer = createReducer(initialState,
     on(usersViewComponentActions.loadUserData, (state)=>{
