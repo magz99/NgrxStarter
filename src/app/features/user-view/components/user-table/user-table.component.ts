@@ -9,6 +9,9 @@ import { getUserTableRows } from "../../user-view.helpers";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserTableComponent implements OnInit {
+    isEditing = false;
+
+
     tableHeaderKeys: string[] = [];
     readonly getUserTableRows = getUserTableRows;
     readonly editLabel = 'Edit';
@@ -20,16 +23,36 @@ export class UserTableComponent implements OnInit {
     @Input() tableHeaders!: Record<string,string>;
     @Output() rowModified: EventEmitter<number> = new EventEmitter<number>()
     @Output() toggleEdit: EventEmitter<number> = new EventEmitter<number>();
+    @Output() isEditingTable: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() tableEdited: EventEmitter<void> = new EventEmitter<void>();
     
     ngOnInit(): void {
         this.tableHeaderKeys = Object.keys(this.tableHeaders)
     }
     
     saveRow(index: number): void {
-    this.rowModified.emit(index);
+    this.rowModified.emit(index); 
     }
 
     editRow(index: number): void {
     this.toggleEdit.emit(index);
+    }
+
+
+    editTable() {
+        this.isEditing= true;
+
+        // Make all the form controls enabled
+        this.isEditingTable.emit(true);
+    }
+
+    saveTable() {
+        if(this.isEditing) {
+            // Emit event that table was edited and reset button state
+
+            this.isEditing = false;
+            this.isEditingTable.emit(false);
+            this.tableEdited.emit();
+        }
     }
 }

@@ -1,16 +1,7 @@
-import { State, createFeatureSelector, createSelector } from "@ngrx/store";
-import { USER_VIEW_FEATURE_KEY, UserState } from "./users-view.reducer";
+import { createSelector } from "@ngrx/store";
+import { usersFeature } from "./users-view.reducer";
 import { mapUserResponseToUserFormDataArray } from "./data-transformers";
 
-const selectUserViewState = createFeatureSelector<UserState>(USER_VIEW_FEATURE_KEY);
-
-const selectUserResponse = createSelector(selectUserViewState, (state: UserState)=>state.response);
- 
-/**
- * Transform the response into what will be used by the UI (table)
- */
-export const selectUserUiData = createSelector(selectUserResponse, (userResponse)=>{
-    return mapUserResponseToUserFormDataArray(userResponse)
+export const selectUserUiData = createSelector(usersFeature.selectAll, (users)=>{
+    return mapUserResponseToUserFormDataArray(users)
 });
-
-export const selectErrorMessage = createSelector(selectUserViewState, (state: UserState)=>state.errorMsg)

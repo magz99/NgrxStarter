@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { UserData, UserUiData, UsersResponse } from "../models/users.model";
+import { User, UserUiData, UsersResponse } from "../models/users.model";
 import { Observable } from "rxjs";
 import { USERS_BASE_URL } from "../user-view.constants";
 
@@ -18,7 +18,11 @@ export class UserDataService {
         return this.httpClient.get<UsersResponse>(USERS_BASE_URL);
     }
 
-    updateUser(userData: UserUiData ): Observable<UserData> {
-        return this.httpClient.patch<UserData>(`${USERS_BASE_URL}/${userData.id}`, userData);
+    updateUser(userData: UserUiData ): Observable<User> {
+        return this.httpClient.patch<User>(`${USERS_BASE_URL}/${userData.id}`, userData);
+    }
+
+    updateAllUsers(userData: UserUiData[]) : Observable<UsersResponse> {
+        return this.httpClient.post<UsersResponse>(`${USERS_BASE_URL}`, userData);
     }
 }
