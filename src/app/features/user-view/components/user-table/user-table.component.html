@@ -1,4 +1,10 @@
 @if(tableForm){
+    @if(isEditing) {
+        <button type="button" (click)="saveTable()">Save Table</button>
+    } @else {
+        <button type="button" (click)="editTable()">Edit Table</button>
+    } 
+
 <form [formGroup]="tableForm">
     <table>
         <thead>
